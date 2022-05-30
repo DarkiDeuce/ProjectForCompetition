@@ -416,7 +416,7 @@ def start(message):
                      reply_markup=markup)
 
 def event(message):
-    situation = randint(3, 3)
+    situation = randint(1, 3)
 
     if situation == 1:
         markup1 = types.InlineKeyboardMarkup()
