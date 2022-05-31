@@ -11,11 +11,11 @@ bot = telebot.TeleBot("5224662237:AAHinmeM1NgsnRAqHIS1Vk55PzOgSwS0i_M")
 def Starting_Сharacteristics():
     global hp, max_hp, dam, xp, gold, lvl, DamWeapon
 
-    hp = 1000
+    hp = 100
     max_hp = 100
-    dam = 1
+    dam = 15
     xp = 0
-    gold = 10000
+    gold = 0
     lvl = 0
     DamWeapon = 0
 
@@ -32,7 +32,7 @@ def Indicators():
 
     return Interface
 
-def Repeat ():
+def Repeat():
     markup = types.InlineKeyboardMarkup()
     markup.add(types.InlineKeyboardButton("💥Да!", callback_data="Repeat"))
     markup.add(types.InlineKeyboardButton("🖐Нет!", callback_data="NoRepeat"))
@@ -203,15 +203,15 @@ def LevelUpMaxHp (message):
 
     max_hp += 15
     Interface = Indicators()
-    bot.send_message(message.chat.id, "Ваше максимальное здоровье увелечино и ровно:" + str(max_hp), reply_markup=Interface)
+    bot.send_message(message.chat.id, "Ваше максимальное здоровье увелечино и ровно: " + str(max_hp), reply_markup=Interface)
     bot.register_next_step_handler(message, event(message))
 
 def LevelUpDam(message):
-    global dam
+    global dam, DamWeapon
 
     dam += 5
     Interface = Indicators()
-    bot.send_message(message.chat.id, "Ваш постоянный урон увелечин на 5 едениц и равен:" + str(dam), reply_markup=Interface)
+    bot.send_message(message.chat.id, "Ваш постоянный урон увелечин на 5 едениц и равен: " + str(dam + DamWeapon), reply_markup=Interface)
     bot.register_next_step_handler(message, event(message))
 
 def LevelUpFullHp(message):
@@ -269,7 +269,7 @@ def MoveMonster (message):
 def RunFight (message):
     global hp, damage_monster
 
-    escapeAttempt = randint(1,2)
+    escapeAttempt = randint(1, 2)
 
     if escapeAttempt == 1:
         markup = types.InlineKeyboardMarkup()
@@ -281,7 +281,7 @@ def RunFight (message):
         hp -= damage_monster
         if hp > 0:
             NotRun = "Сбежать от монстра не получается. Из-за собсвтенной неуклюжести во время побега вы падаете,\
-                                                                что позвляет монстру атакавать вас и нанести " + str(
+что позвляет монстру атакавать вас и нанести " + str(
                 damage_monster) + " урона. \n\n🗡Прийдётся драться! \n\n😡В порыве ярости, резким рывком вы подрываете своё тело с земли и наотмашь бьёте врага!"
             Interface = Indicators()
             bot.send_message(message.chat.id, text=NotRun, reply_markup= Interface)
@@ -290,7 +290,7 @@ def RunFight (message):
             repeat = Repeat()
             Interface = Indicators()
             bot.send_message(message.chat.id, "Сбежать от монстра не получается. Из-за собсвтенной неуклюжести во время побега вы падаете,\
-                                                            что позвляет монстру нанести фатальный удар по вам. В процессе битвы вы трагически погибаете.", reply_markup= Interface)
+что позвляет монстру нанести фатальный удар по вам. В процессе битвы вы трагически погибаете.", reply_markup= Interface)
             bot.send_message(message.chat.id, "Желаете отправиться в приключение снова?", reply_markup=repeat)
 
 def shop (message):
@@ -384,7 +384,7 @@ def ExaminationMaxHp (message, Replenishment):
     else:
         hp += Replenishment
         Interface = Indicators()
-        bot.send_message(message.chat.id, "Вы чувствуете как элексир наполняет вас силой и заживляет старые раны." + str(hp) + Seller_Satisfied, reply_markup=Interface)
+        bot.send_message(message.chat.id, "Вы чувствуете как элексир наполняет вас силой и заживляет старые раны." + Seller_Satisfied, reply_markup=Interface)
         bot.register_next_step_handler(message, event(message))
 
 def Buy_Weapon (message):
